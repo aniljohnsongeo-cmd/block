@@ -1,0 +1,670 @@
+/* ─── LEGO Digital Studio — Premium White Theme ───────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=DM+Serif+Display:ital@0;1&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Design Tokens ── */
+:root {
+  --bg:         #FFFFFF;
+  --bg-soft:    #FAFAFA;
+  --fg:         #0A0A0A;
+  --fg-mid:     #3A3A3A;
+  --fg-muted:   #8A8A8A;
+  --fg-subtle:  #C8C8C8;
+
+  --red:        #E3000B;
+  --blue:       #0055BF;
+  --yellow:     #FFD700;
+  --green:      #00852B;
+  --deloitte:   #86BC25;
+
+  --border:     rgba(0,0,0,0.07);
+  --border-md:  rgba(0,0,0,0.12);
+
+  --font-sans:  'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'DM Serif Display', Georgia, serif;
+
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:    cubic-bezier(0.7, 0, 0.84, 0);
+
+  --radius-sm:  3px;
+  --radius-md:  6px;
+
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-lg:  0 24px 80px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06);
+}
+
+/* ── Base ── */
+html {
+  scroll-behavior: auto;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────────
+   CANVAS (fixed, full screen)
+───────────────────────────────────────── */
+.canvas-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background: #FFFFFF;
+}
+
+/* Subtle dot grid overlay */
+.canvas-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ─────────────────────────────────────────
+   NAVBAR
+───────────────────────────────────────── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 64px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar__stud {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  width: 18px;
+  height: 18px;
+}
+
+.navbar__stud-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.navbar__stud-dot:nth-child(1) { background: var(--red); }
+.navbar__stud-dot:nth-child(2) { background: var(--blue); }
+.navbar__stud-dot:nth-child(3) { background: var(--yellow); }
+.navbar__stud-dot:nth-child(4) { background: var(--green); }
+
+.navbar__brand {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.navbar__links {
+  display: flex;
+  gap: 36px;
+}
+
+.navbar__link {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--fg);
+  transition: width 0.25s var(--ease-out);
+}
+
+.navbar__link:hover {
+  color: var(--fg);
+}
+
+.navbar__link:hover::after {
+  width: 100%;
+}
+
+.navbar__cta-btn {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #fff;
+  background: var(--fg);
+  padding: 9px 22px;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.navbar__cta-btn:hover {
+  background: var(--red);
+  transform: translateY(-1px);
+}
+
+/* ─────────────────────────────────────────
+   SCROLL OVERLAY — Editorial text
+───────────────────────────────────────── */
+.scroll-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 9vh;
+}
+
+.scroll-overlay__content {
+  position: relative;
+  padding: 0 8vw;
+  width: 100%;
+}
+
+.narrative-block {
+  width: 100%;
+  max-width: 680px;
+}
+
+.narrative-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-bottom: 16px;
+}
+
+.narrative-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--fg-subtle);
+}
+
+.narrative-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 6.5vw, 6.5rem);
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin-bottom: 20px;
+}
+
+.narrative-headline em {
+  font-style: italic;
+  color: var(--fg-mid);
+}
+
+.narrative-sub {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--fg-muted);
+  letter-spacing: 0.01em;
+  line-height: 1.7;
+  max-width: 380px;
+}
+
+/* ── Right-side scroll indicator ── */
+.scroll-indicator {
+  position: fixed;
+  right: 36px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.scroll-indicator__track {
+  width: 1.5px;
+  height: 120px;
+  background: var(--border-md);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.scroll-indicator__fill {
+  width: 100%;
+  background: var(--fg);
+  border-radius: 2px;
+  transition: height 0.12s linear;
+  transform-origin: top;
+}
+
+.phase-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.phase-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--fg-subtle);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.phase-dot.active {
+  background: var(--fg);
+  transform: scale(1.8);
+}
+
+/* ── Bottom scroll hint ── */
+.scroll-hint {
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.scroll-hint.hidden {
+  opacity: 0;
+}
+
+.scroll-hint__text {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.scroll-hint__arrow {
+  width: 1.5px;
+  height: 32px;
+  background: linear-gradient(to bottom, var(--fg-subtle), transparent);
+  border-radius: 2px;
+  animation: scrollPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
+  50%       { opacity: 1;   transform: scaleY(1.0); }
+}
+
+/* ─────────────────────────────────────────
+   DISCIPLINE LABELS (floating in scene)
+───────────────────────────────────────── */
+.discipline-tags {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────
+   HOVER LABEL
+───────────────────────────────────────── */
+.hover-label {
+  position: fixed;
+  bottom: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  pointer-events: none;
+  animation: fadeUp 0.22s var(--ease-out) forwards;
+  background: rgba(255,255,255,0.95);
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius-md);
+  padding: 10px 20px 12px;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(12px);
+}
+
+.hover-label__tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.hover-label__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ─────────────────────────────────────────
+   BUILDING DETAIL MODAL
+───────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0,0,0,0.12);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.building-modal {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: min(460px, 94vw);
+  z-index: 301;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.44s var(--ease-out) forwards;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* Top color bar */
+.building-modal__header {
+  padding: 28px 36px 24px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.building-modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: none;
+  border: 1px solid var(--border-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--fg-muted);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.building-modal__close:hover {
+  background: var(--fg);
+  color: #fff;
+  border-color: var(--fg);
+}
+
+.building-modal__body {
+  flex: 1;
+  padding: 36px 36px 40px;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Color accent pill */
+.building-modal__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+}
+
+.building-modal__title {
+  font-family: var(--font-serif);
+  font-size: 2.6rem;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin-bottom: 16px;
+}
+
+.building-modal__description {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--fg-muted);
+  margin-bottom: 36px;
+  font-weight: 400;
+}
+
+.building-modal__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--fg);
+  padding: 12px 24px;
+  border: 1.5px solid var(--fg);
+  border-radius: var(--radius-sm);
+  transition: all 0.22s var(--ease-out);
+}
+
+.building-modal__cta:hover {
+  background: var(--fg);
+  color: #fff;
+  gap: 12px;
+}
+
+/* LEGO brick preview at bottom */
+.building-modal__brick-row {
+  display: flex;
+  gap: 6px;
+  align-items: flex-end;
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.building-modal__brick {
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.building-modal__brick::after {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+}
+
+/* ─────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(110%); }
+  to   { transform: translateX(0); }
+}
+
+/* ─────────────────────────────────────────
+   LOADING SCREEN
+───────────────────────────────────────── */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  transition: opacity 0.6s ease;
+}
+
+.loading-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-bricks {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.loading-brick {
+  width: 14px;
+  border-radius: 2px;
+  animation: brickRise 1.2s var(--ease-out) infinite;
+}
+
+.loading-brick:nth-child(1) { height: 28px; background: var(--red);    animation-delay: 0s; }
+.loading-brick:nth-child(2) { height: 36px; background: var(--blue);   animation-delay: 0.12s; }
+.loading-brick:nth-child(3) { height: 22px; background: var(--yellow); animation-delay: 0.24s; }
+.loading-brick:nth-child(4) { height: 32px; background: var(--green);  animation-delay: 0.36s; }
+.loading-brick:nth-child(5) { height: 18px; background: #0A0A0A;       animation-delay: 0.48s; }
+
+@keyframes brickRise {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50%       { transform: translateY(-10px); opacity: 1; }
+}
+
+.loading-text {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* ─────────────────────────────────────────
+   PHASE LABEL BADGE (shown during blocks arrive)
+───────────────────────────────────────── */
+.phase-badge-row {
+  position: fixed;
+  bottom: 160px;
+  left: 8vw;
+  z-index: 12;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.phase-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 100px;
+  animation: fadeUp 0.4s var(--ease-out) forwards;
+  opacity: 0;
+}
+
+/* ─────────────────────────────────────────
+   MOBILE
+───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+    height: 56px;
+  }
+
+  .navbar__links,
+  .navbar__cta-btn {
+    display: none;
+  }
+
+  .scroll-overlay__content {
+    padding: 0 6vw;
+  }
+
+  .narrative-headline {
+    font-size: clamp(2.4rem, 10vw, 4rem);
+  }
+
+  .building-modal {
+    width: 100vw;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 0; }
